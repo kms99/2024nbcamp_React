@@ -7,7 +7,9 @@ export default function Home() {
 
   return (
     <div>
-      <button onClick={() => router.push("/login")}>로그인/회원가입</button>
+      <button onClick={() => router.push("/login/login")}>
+        로그인/회원가입
+      </button>
     </div>
   );
 }

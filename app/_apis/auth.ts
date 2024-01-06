@@ -28,7 +28,7 @@ type loginUserArgs = {
 };
 
 export const loginUser = async ({ id, password }: loginUserArgs) => {
-  const response = await authAxios.post("/login?expiresIn=10m", {
+  const response = await authAxios.post("/login?expiresIn=10s", {
     id,
     password,
   });
@@ -36,19 +36,8 @@ export const loginUser = async ({ id, password }: loginUserArgs) => {
 };
 
 // 회원 정보 확인
-export const getUser = async (accessToken: string) => {
+export const getUser = async ({ accessToken }: { accessToken: string }) => {
   const response = await authAxios.get("/user", {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-  return response;
-};
-
-// 프로필 변경
-export const updateUser = async (accessToken: string) => {
-  const response = await authAxios.patch("/profile", {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${accessToken}`,

@@ -1,9 +1,11 @@
 import React from "react";
 import { useMutation } from "@tanstack/react-query";
-import { signUpUser, getUser, loginUser, updateUser } from "@/app/_apis/auth";
-import axios, { AxiosError } from "axios";
+import { signUpUser, getUser, loginUser } from "@/app/_apis/auth";
+import { AxiosError, AxiosResponse } from "axios";
+import { User } from "@/app/_redux/modules/authSlice";
 
 export default function useAuth() {
+  // 회원가입 Mutation
   const signUpMutation = useMutation({
     mutationFn: signUpUser,
     onSuccess: () => {},
@@ -16,12 +18,14 @@ export default function useAuth() {
     },
   });
 
+  //   로그인 Mutation
   const loginMutation = useMutation({
     mutationFn: loginUser,
-    onSuccess: (data) => {
+    onSuccess: (response: AxiosResponse<User>) => {
       alert(`로그인성공 ${123}`);
-      console.log("로그인 성공");
-      // TODO: response.data 전역으로 관리 및 accessToken 로컬스토리지 저장
+      //   로컬스토리지 토큰 저장
+      if (response.data.accessToken)
+        localStorage.setItem("token", response.data.accessToken);
     },
     onError: (error: AxiosError<{ message: string }>) => {
       if (error.response) {
@@ -32,20 +36,24 @@ export default function useAuth() {
     },
   });
 
+  //  유저정보를 가져오는 Mutation
+  // 기존 데이터 타입과 다른 format이므로 타입 가공
+  type FormatOmitUser = Omit<User, "userId" | "accessToken"> & { id: string };
   const userInfoMutation = useMutation({
     mutationFn: getUser,
-    onSuccess: () => {},
-  });
-
-  const profileUpdateMutation = useMutation({
-    mutationFn: updateUser,
-    onSuccess: () => {},
+    onSuccess: (response: AxiosResponse<FormatOmitUser>) => {},
+    onError: (error: AxiosError<{ message: string }>) => {
+      if (error.response) {
+        alert(`토큰만료 ${error.response.data.message}`);
+      } else {
+        alert(`토큰만료`);
+      }
+    },
   });
 
   return {
     signUpMutate: signUpMutation.mutate,
     loginMutate: loginMutation.mutate,
     getUserInfoMutate: userInfoMutation.mutate,
-    updateProfileMutate: profileUpdateMutation.mutate,
   };
 }

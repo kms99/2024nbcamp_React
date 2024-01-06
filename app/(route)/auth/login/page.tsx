@@ -4,16 +4,20 @@ import Button from "@/app/_components/Button";
 import { ButtonType } from "@/app/_components/_buttonType";
 import useAuth from "@/app/_hooks/query/useAuth";
 import useInput from "@/app/_hooks/useInput";
+import { AppDispatch } from "@/app/_redux/config";
+import { setUser } from "@/app/_redux/modules/authSlice";
 import validationCheck from "@/app/utils/validationCheck";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { useDispatch } from "react-redux";
 
 export default function Page() {
   const router = useRouter();
   const { loginMutate } = useAuth();
   const [email, emailChangeHandler, resetEmail] = useInput("");
   const [password, passwordChangeHandler, resetPassword] = useInput("");
+  const dispatch = useDispatch<AppDispatch>();
 
   const loginHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,10 +37,11 @@ export default function Page() {
     loginMutate(
       { id: email, password },
       {
-        onSuccess: () => {
+        onSuccess: (response) => {
           resetEmail();
           resetPassword();
           router.push("/");
+          dispatch(setUser(response.data));
         },
       }
     );

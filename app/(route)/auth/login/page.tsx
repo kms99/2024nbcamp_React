@@ -4,13 +4,15 @@ import Button from "@/app/_components/Button";
 import { ButtonType } from "@/app/_components/_buttonType";
 import useAuth from "@/app/_hooks/query/useAuth";
 import useInput from "@/app/_hooks/useInput";
-import { AppDispatch } from "@/app/_redux/config";
+import { AppDispatch, RootState } from "@/app/_redux/config";
 import { setUser } from "@/app/_redux/modules/authSlice";
 import validationCheck from "@/app/utils/validationCheck";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 export default function Page() {
   const router = useRouter();
@@ -18,17 +20,20 @@ export default function Page() {
   const [email, emailChangeHandler, resetEmail] = useInput("");
   const [password, passwordChangeHandler, resetPassword] = useInput("");
   const dispatch = useDispatch<AppDispatch>();
+  const isLogin = useSelector((state: RootState) => {
+    return state.authSlice.currentUser.success;
+  });
 
   const loginHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!validationCheck(email, "email")) {
-      alert("유효하지 않은 이메일 입니다.");
+      toast.error("유효하지 않은 이메일 입니다.");
       return;
     }
 
     if (!validationCheck(password, "password")) {
-      alert(
+      toast.error(
         "비밀번호는 최소 8자 이상이며, 문자와 숫자를 각각 하나 이상 포함해야 합니다."
       );
       return;
@@ -46,6 +51,14 @@ export default function Page() {
       }
     );
   };
+
+  useEffect(() => {
+    if (isLogin) {
+      toast("이미 로그인 되어있습니다.");
+      // alert("이미 로그인 되어있습니다.");
+      router.push("/");
+    }
+  }, []);
 
   return (
     <div className="flex flex-col justify-center items-center h-full">
@@ -71,7 +84,6 @@ export default function Page() {
           onChange={passwordChangeHandler}
           value={password}
         />
-        <Link href="/auth/forgotPassword">비밀번호를 잊으셨나요?</Link>
         <Button text="로그인" type={ButtonType.Main} handler={null} />
       </form>
       <section>

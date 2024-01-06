@@ -6,10 +6,12 @@ import useAuth from "@/app/_hooks/query/useAuth";
 import useInput from "@/app/_hooks/useInput";
 import validationCheck from "@/app/utils/validationCheck";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function Page() {
   const { signUpMutate } = useAuth();
-
+  const router = useRouter();
   const [email, emailChangeHandler, resetEmail] = useInput("");
   const [password, passwordChangeHandler, resetPassword] = useInput("");
   const [passwordCheck, passwordCheckChangeHandler, resetPasswordCheck] =
@@ -20,24 +22,24 @@ export default function Page() {
     e.preventDefault();
 
     if (!validationCheck(email, "email")) {
-      alert("유효하지 않은 이메일 입니다.");
+      toast.error("유효하지 않은 이메일 입니다.");
       return;
     }
 
     if (!validationCheck(password, "password")) {
-      alert(
+      toast.error(
         "비밀번호는 최소 8자 이상이며, 문자와 숫자를 각각 하나 이상 포함해야 합니다."
       );
       return;
     }
 
     if (!validationCheck(nickname, "nickname")) {
-      alert("닉네임은 최소 2글자, 최대 8글자 입니다.");
+      toast.error("닉네임은 최소 2글자, 최대 8글자 입니다.");
       return;
     }
 
     if (password !== passwordCheck) {
-      alert("비밀번호가 일치하지 않습니다. 다시 확인하세요");
+      toast.error("비밀번호가 일치하지 않습니다. 다시 확인하세요");
       return;
     }
 
@@ -46,6 +48,7 @@ export default function Page() {
       {
         onSuccess: () => {
           resetEmail(), resetNickname(), resetPassword(), resetPasswordCheck();
+          router.push("/auth/login");
         },
       }
     );

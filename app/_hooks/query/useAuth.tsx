@@ -3,17 +3,20 @@ import { useMutation } from "@tanstack/react-query";
 import { signUpUser, getUser, loginUser } from "@/app/_apis/auth";
 import { AxiosError, AxiosResponse } from "axios";
 import { User } from "@/app/_redux/modules/authSlice";
+import { toast } from "react-toastify";
 
 export default function useAuth() {
   // 회원가입 Mutation
   const signUpMutation = useMutation({
     mutationFn: signUpUser,
-    onSuccess: () => {},
+    onSuccess: () => {
+      toast.success("회원가입에 성공하였습니다. 로그인을 진행하세요");
+    },
     onError: (error: AxiosError<{ message: string }>) => {
       if (error.response) {
-        alert(`회원가입실패 ${error.response.data.message}`);
+        toast.error(`[회원가입실패] ${error.response.data.message}`);
       } else {
-        alert(`회원가입실패 ${error.message}`);
+        toast.error(`[회원가입실패] ${error.message}`);
       }
     },
   });
@@ -22,16 +25,16 @@ export default function useAuth() {
   const loginMutation = useMutation({
     mutationFn: loginUser,
     onSuccess: (response: AxiosResponse<User>) => {
-      alert(`로그인성공 ${123}`);
+      toast.success("로그인 성공하였습니다.");
       //   로컬스토리지 토큰 저장
       if (response.data.accessToken)
         localStorage.setItem("token", response.data.accessToken);
     },
     onError: (error: AxiosError<{ message: string }>) => {
       if (error.response) {
-        alert(`로그인실패 ${error.response.data.message}`);
+        toast.error(`[로그인실패] ${error.response.data.message}`);
       } else {
-        alert(`로그인실패 ${error.message}`);
+        toast.error(`[로그인실패] ${error.message}`);
       }
     },
   });
@@ -44,9 +47,9 @@ export default function useAuth() {
     onSuccess: (response: AxiosResponse<FormatOmitUser>) => {},
     onError: (error: AxiosError<{ message: string }>) => {
       if (error.response) {
-        alert(`토큰만료 ${error.response.data.message}`);
+        toast.error(`[토큰만료] ${error.response.data.message}`);
       } else {
-        alert(`토큰만료`);
+        toast.error(`[토큰만료] ${error.message}`);
       }
     },
   });

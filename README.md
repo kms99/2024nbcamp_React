@@ -1,5 +1,12 @@
 # 24 Sparta Hackerthon
 
+## 프리뷰
+
+![Alt text](image-1.png)
+![Alt text](image.png)
+![Alt text](image-2.png)
+![Alt text](image-3.png)
+
 ## 기간
 
 2024.01.06(토) 10:30 ~ 19:00
@@ -22,7 +29,7 @@
 ## 개요
 
 기본적인 회원가입과 로그인 기능이 있는 로직을 구현하였다.  
-주어진 로그인 서버와
+주어진 로그인 서버를 통해서 REST API 를 적용시켜 통신하였다.
 
 ## 과제 구현에서의 요점
 

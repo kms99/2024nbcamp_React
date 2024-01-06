@@ -7,20 +7,24 @@ export default function useAuth() {
     mutationFn: signUpUser,
     onSuccess: () => {},
   });
+
   const loginMutation = useMutation({
     mutationFn: loginUser,
     onSuccess: () => {},
   });
+
   const userInfoMutation = useMutation({
     mutationFn: getUser,
     onSuccess: () => {},
   });
+
   const profileUpdateMutation = useMutation({
     mutationFn: updateUser,
     onSuccess: () => {},
   });
+
   return {
-    singUpMutate: signUpMutation.mutate,
+    signUpMutate: signUpMutation.mutate,
     loginMutate: loginMutation.mutate,
     getUserInfoMutate: userInfoMutation.mutate,
     updateProfileMutate: profileUpdateMutation.mutate,

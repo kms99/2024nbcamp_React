@@ -4,39 +4,30 @@ import Button from "@/app/_components/Button";
 import { ButtonType } from "@/app/_components/_buttonType";
 import useAuth from "@/app/_hooks/query/useAuth";
 import useInput from "@/app/_hooks/useInput";
-import validationCheck from "@/app/utils/validationCheck";
 import Link from "next/link";
-import React from "react";
 
 export default function Page() {
-  const { loginMutate } = useAuth();
+  const { signUpMutate } = useAuth();
+
   const [email, emailChangeHandler, resetEmail] = useInput("");
   const [password, passwordChangeHandler, resetPassword] = useInput("");
+  const [passwordCheck, passwordCheckChangeHandler, resetPasswordCheck] =
+    useInput("");
+  const [nickname, nicknameChangeHandler, resetNickname] = useInput("");
 
-  const loginHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // TODO: 로그인 validate check
-    if (!validationCheck(email, "email")) {
-      alert("유효하지 않은 이메일 입니다.");
-      return;
-    }
-    if (!validationCheck(password, "password")) {
-      alert(
-        "비밀번호는 최소 8자 이상이며, 문자와 숫자를 각각 하나 이상 포함해야 합니다."
-      );
-      return;
-    }
-    loginMutate({ id: email, password });
-    resetEmail();
-    resetPassword();
+  const signUpHandler = () => {
+    // TODO: signUp validation
+    signUpMutate({ id: email, password, nickname });
+
+    resetEmail(), resetNickname(), resetPassword(), resetPasswordCheck();
   };
 
   return (
     <div className="flex flex-col justify-center items-center h-full">
-      <h2>로그인</h2>
+      <h2>회원가입</h2>
       <form
         className="flex flex-col shadow-login-frame bg-color-bg-sub"
-        onSubmit={loginHandler}
+        onSubmit={signUpHandler}
       >
         <label>이메일</label>
         <input
@@ -55,12 +46,29 @@ export default function Page() {
           onChange={passwordChangeHandler}
           value={password}
         />
-        <Link href="/auth/forgotPassword">비밀번호를 잊으셨나요?</Link>
-        <Button text="로그인" type={ButtonType.Main} handler={null} />
+
+        <label>비밀번호 확인</label>
+        <input
+          placeholder="비밀번호를 다시 입력해주세요."
+          type="password"
+          className="text-lg w-96"
+          onChange={passwordCheckChangeHandler}
+          value={passwordCheck}
+        />
+
+        <label>닉네임</label>
+        <input
+          placeholder="닉네임을 입력해주세요."
+          type="text"
+          className="text-lg w-96"
+          onChange={nicknameChangeHandler}
+          value={nickname}
+        />
+        <Button text="회원가입" type={ButtonType.Main} handler={null} />
       </form>
       <section>
         <span>
-          아직 회원이 아니신가요? <Link href="/auth/signup">회원가입</Link>
+          이미 회원이신가요? <Link href="/auth/login">로그인</Link>
         </span>
       </section>
     </div>

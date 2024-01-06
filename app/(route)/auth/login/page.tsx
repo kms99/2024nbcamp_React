@@ -2,6 +2,7 @@
 
 import Button from "@/app/_components/Button";
 import { ButtonType } from "@/app/_components/_buttonType";
+import useInput from "@/app/_hooks/useInput";
 import Link from "next/link";
 import React from "react";
 
@@ -9,6 +10,9 @@ export default function Page() {
   const loginHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
+
+  const [email, emailChangeHandler, resetEmail] = useInput("");
+  const [password, passwordChangeHandler, resetPassword] = useInput("");
 
   return (
     <div className="flex flex-col justify-center items-center h-full">
@@ -22,12 +26,17 @@ export default function Page() {
           placeholder="이메일 주소를 입력해주세요."
           type="email"
           className="text-lg w-96"
+          onChange={() => emailChangeHandler}
+          value={email as string}
         />
+
         <label>비밀번호</label>
         <input
           placeholder="비밀번호를 입력해주세요."
           type="password"
           className="text-lg w-96"
+          onChange={() => passwordChangeHandler}
+          value={password as string}
         />
         <Link href="/auth/forgotPassword">비밀번호를 잊으셨나요?</Link>
         <Button text="로그인" type={ButtonType.Main} handler={null} />

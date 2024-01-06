@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 24 Sparta Hackerthon
 
-## Getting Started
+## 기간
 
-First, run the development server:
+2024.01.06(토) 10:30 ~ 19:00
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 주제
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+로그인 로직 구성
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 사용기술
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- next.js (app router)
+- tailwind css
+- react-toastify
 
-## Learn More
+## 기능
 
-To learn more about Next.js, take a look at the following resources:
+- 로그인
+- 회원가입
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 개요
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+기본적인 회원가입과 로그인 기능이 있는 로직을 구현하였다.  
+주어진 로그인 서버와
 
-## Deploy on Vercel
+## 과제 구현에서의 요점
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+사실 next.js의 app router를 거의 사용해본적이 없었다. 따라서 과제를 구현하면서 app router에 대한 숙련도와 이해도가 높아지는 것을 목적으로 하였다. 사실 로그인 로직은 정말 필수적이기 때문에 많은 프로젝트에서 경험해봤다. 물론 쉽다는 말은 아니다. 정말 깊게 개발한다면 끝이 없을 정도로 개발할 수 있는 부분이라고 생각한다. 따라서 이번 과제구현에서는 더 디테일한 ux 구성을 목적으로 하였다. user에게 시각적으로 로그인과정에서의 많은 부분을 알려주는데 집중을 하였고 그 과정에서 기존 alert가 아닌 react-toastify 라이브러리를 사용하면서 ui적으로도 개선하려 노력하였다. 그과정에서 리디렉션에 대한 부분도 구현하려고 노력하였지만 숙련도가 부족하여 구현하지 못하였다. 이런부분은 추가 리펙토링을 통해 개선이 필요하다.  
+<br>
+추가로 중요하게 생각하였던 부분은 신뢰성이다. 로그인을 했을 때 유저에게 일정시간 유효한 JWT 토큰이 생기면서 로그인 상태를 유지할 수 있다. 나는 해당 시간이 끝났을 때 어떻게 처리를 할 것인가를 고민하였다. 고민 한 결과 root 파일이 마운트 되었을 때마다 검증하는 로직을 실시하였다. 사실 마운트 시에만 검증이 가능하기 때문에 부족한 로직이라고 생각한다. 해당록직은 계속 고민하였지만 답을 찾지 못하였고 추후 리펙토링 하도록 하겠다.  
+<br>
+마지막으로 중요하게 생각했던 것은 시간이다. 해커톤은 주어진 시간 내에 과제를 구현하는 코딩의 마라톤이다. 나는 이것이 과제가 아니라 실무라면 이라는 의문점으로 해당 과제를 접근하였다. 실무에서도 가장 중요한 것은 고객과의 신뢰이다. 신뢰를 유지하기 위해서는 기한이 정말 중요하다고 생각한다. 따라서 최대한 주어진 시간을 효율적으로 사용하도록 노력하였다.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## 느낀점
+
+이번 해커톤을 통해서 기존 프로젝트와 다른 압박감을 느낄 수 있었다. 나는 이 압박감이 실무에서는 더욱 심할 것이라고 생각한다. 따라서 최대한 효율적을 분배하려 노력하였고 정말 좋은 경험이였다.  
+이러한 압박감을 오히려 즐기는 코더가 되고싶다.

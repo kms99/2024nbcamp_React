@@ -107,7 +107,7 @@ export default function Page() {
         <Button text="회원가입" type={ButtonType.Main} handler={null} />
       </form>
       <section>
-        <span>
+        <span className="mt-5 inline-block">
           이미 회원이신가요? <Link href="/auth/login">로그인</Link>
         </span>
       </section>

@@ -56,46 +56,54 @@ export default function Page() {
 
   return (
     <div className="flex flex-col justify-center items-center h-full">
-      <h2>회원가입</h2>
+      <h2 className="text-color-bg-main font-bold text-5xl mb-3">회원가입</h2>
       <form
-        className="flex flex-col shadow-login-frame bg-color-bg-sub"
+        className="flex flex-col shadow-login-frame bg-color-bg-sub p-10"
         onSubmit={signUpHandler}
       >
-        <label>이메일</label>
-        <input
-          placeholder="이메일 주소를 입력해주세요."
-          type="email"
-          className="text-lg w-96"
-          onChange={emailChangeHandler}
-          value={email}
-        />
+        <section className="flex flex-col">
+          <label>이메일</label>
+          <input
+            placeholder="이메일 주소를 입력해주세요."
+            type="email"
+            className="text-lg w-96  outline-none"
+            onChange={emailChangeHandler}
+            value={email}
+          />
+        </section>
 
-        <label>비밀번호</label>
-        <input
-          placeholder="비밀번호를 입력해주세요."
-          type="password"
-          className="text-lg w-96"
-          onChange={passwordChangeHandler}
-          value={password}
-        />
+        <section className="flex flex-col my-8">
+          <label>비밀번호</label>
+          <input
+            placeholder="비밀번호를 입력해주세요."
+            type="password"
+            className="text-lg w-96  outline-none"
+            onChange={passwordChangeHandler}
+            value={password}
+          />
+        </section>
 
-        <label>비밀번호 확인</label>
-        <input
-          placeholder="비밀번호를 다시 입력해주세요."
-          type="password"
-          className="text-lg w-96"
-          onChange={passwordCheckChangeHandler}
-          value={passwordCheck}
-        />
+        <section className="flex flex-col mb-8">
+          <label>비밀번호 확인</label>
+          <input
+            placeholder="비밀번호를 다시 입력해주세요."
+            type="password"
+            className="text-lg w-96  outline-none"
+            onChange={passwordCheckChangeHandler}
+            value={passwordCheck}
+          />
+        </section>
 
-        <label>닉네임</label>
-        <input
-          placeholder="닉네임을 입력해주세요."
-          type="text"
-          className="text-lg w-96"
-          onChange={nicknameChangeHandler}
-          value={nickname}
-        />
+        <section className="flex flex-col  mb-8">
+          <label>닉네임</label>
+          <input
+            placeholder="닉네임을 입력해주세요."
+            type="text"
+            className="text-lg w-96  outline-none"
+            onChange={nicknameChangeHandler}
+            value={nickname}
+          />
+        </section>
         <Button text="회원가입" type={ButtonType.Main} handler={null} />
       </form>
       <section>

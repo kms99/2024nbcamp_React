@@ -12,7 +12,10 @@ type ButtonProps = {
 export default function Button({ handler, type, text }: ButtonProps) {
   const dummyHandler = () => {};
   return (
-    <button onClick={handler || dummyHandler} className={`${type}`}>
+    <button
+      onClick={handler || dummyHandler}
+      className={`${type} py-3 text-lg font-bold`}
+    >
       {text}
     </button>
   );

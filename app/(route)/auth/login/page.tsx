@@ -62,32 +62,38 @@ export default function Page() {
 
   return (
     <div className="flex flex-col justify-center items-center h-full">
-      <h2>로그인</h2>
+      <h2 className="text-color-bg-main font-bold text-5xl mb-3">로그인</h2>
       <form
-        className="flex flex-col shadow-login-frame bg-color-bg-sub"
+        className="flex flex-col shadow-login-frame bg-color-bg-sub p-10"
         onSubmit={loginHandler}
       >
-        <label>이메일</label>
-        <input
-          placeholder="이메일 주소를 입력해주세요."
-          type="email"
-          className="text-lg w-96"
-          onChange={emailChangeHandler}
-          value={email}
-        />
+        <section className="flex flex-col">
+          <label htmlFor="login_email">이메일</label>
+          <input
+            placeholder="이메일 주소를 입력해주세요."
+            type="email"
+            className="text-lg w-96 outline-none"
+            onChange={emailChangeHandler}
+            value={email}
+            id="login_email"
+          />
+        </section>
 
-        <label>비밀번호</label>
-        <input
-          placeholder="비밀번호를 입력해주세요."
-          type="password"
-          className="text-lg w-96"
-          onChange={passwordChangeHandler}
-          value={password}
-        />
+        <section className="flex flex-col  my-8">
+          <label htmlFor="login_password">비밀번호</label>
+          <input
+            placeholder="비밀번호를 입력해주세요."
+            type="password"
+            className="text-lg w-96 outline-none"
+            onChange={passwordChangeHandler}
+            value={password}
+            id="login_password"
+          />
+        </section>
         <Button text="로그인" type={ButtonType.Main} handler={null} />
       </form>
       <section>
-        <span>
+        <span className="mt-5 inline-block">
           아직 회원이 아니신가요? <Link href="/auth/signup">회원가입</Link>
         </span>
       </section>

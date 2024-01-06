@@ -2,7 +2,9 @@
 
 import React, { useState } from "react";
 
-export default function useInput(initialValue: string) {
+export default function useInput(
+  initialValue: string
+): [string, (e: React.ChangeEvent<HTMLInputElement>) => void, () => void] {
   const [value, setValue] = useState<string>(initialValue);
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {

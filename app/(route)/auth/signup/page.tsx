@@ -4,6 +4,7 @@ import Button from "@/app/_components/Button";
 import { ButtonType } from "@/app/_components/_buttonType";
 import useAuth from "@/app/_hooks/query/useAuth";
 import useInput from "@/app/_hooks/useInput";
+import validationCheck from "@/app/utils/validationCheck";
 import Link from "next/link";
 
 export default function Page() {
@@ -15,11 +16,39 @@ export default function Page() {
     useInput("");
   const [nickname, nicknameChangeHandler, resetNickname] = useInput("");
 
-  const signUpHandler = () => {
-    // TODO: signUp validation
-    signUpMutate({ id: email, password, nickname });
+  const signUpHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-    resetEmail(), resetNickname(), resetPassword(), resetPasswordCheck();
+    if (!validationCheck(email, "email")) {
+      alert("유효하지 않은 이메일 입니다.");
+      return;
+    }
+
+    if (!validationCheck(password, "password")) {
+      alert(
+        "비밀번호는 최소 8자 이상이며, 문자와 숫자를 각각 하나 이상 포함해야 합니다."
+      );
+      return;
+    }
+
+    if (!validationCheck(nickname, "nickname")) {
+      alert("닉네임은 최소 2글자, 최대 8글자 입니다.");
+      return;
+    }
+
+    if (password !== passwordCheck) {
+      alert("비밀번호가 일치하지 않습니다. 다시 확인하세요");
+      return;
+    }
+
+    signUpMutate(
+      { id: email, password, nickname },
+      {
+        onSuccess: () => {
+          resetEmail(), resetNickname(), resetPassword(), resetPasswordCheck();
+        },
+      }
+    );
   };
 
   return (

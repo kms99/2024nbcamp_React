@@ -6,29 +6,40 @@ import useAuth from "@/app/_hooks/query/useAuth";
 import useInput from "@/app/_hooks/useInput";
 import validationCheck from "@/app/utils/validationCheck";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 export default function Page() {
+  const router = useRouter();
   const { loginMutate } = useAuth();
   const [email, emailChangeHandler, resetEmail] = useInput("");
   const [password, passwordChangeHandler, resetPassword] = useInput("");
 
   const loginHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO: 로그인 validate check
+
     if (!validationCheck(email, "email")) {
       alert("유효하지 않은 이메일 입니다.");
       return;
     }
+
     if (!validationCheck(password, "password")) {
       alert(
         "비밀번호는 최소 8자 이상이며, 문자와 숫자를 각각 하나 이상 포함해야 합니다."
       );
       return;
     }
-    loginMutate({ id: email, password });
-    resetEmail();
-    resetPassword();
+
+    loginMutate(
+      { id: email, password },
+      {
+        onSuccess: () => {
+          resetEmail();
+          resetPassword();
+          router.push("/");
+        },
+      }
+    );
   };
 
   return (
